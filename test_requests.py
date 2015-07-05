@@ -813,6 +813,14 @@ class RequestsTestCase(unittest.TestCase):
         url = 'http://user:pass%23pass@complex.url.com/path?query=yes'
         assert ('user', 'pass#pass') == requests.utils.get_auth_from_url(url)
 
+    def test_get_auth_from_url_empty_password(self):
+        url = 'http://user:@complex.url.com/path?query=yes'
+        assert ('user', '') == requests.utils.get_auth_from_url(url)
+
+    def test_get_auth_from_url_no_password(self):
+        url = 'http://user@complex.url.com/path?query=yes'
+        assert ('user', '') == requests.utils.get_auth_from_url(url)
+
     def test_cannot_send_unprepared_requests(self):
         r = requests.Request(url=HTTPBIN)
         with pytest.raises(ValueError):
