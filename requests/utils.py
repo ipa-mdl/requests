@@ -667,7 +667,7 @@ def get_auth_from_url(url):
     parsed = urlparse(url)
 
     try:
-        auth = (unquote(parsed.username), unquote(parsed.password))
+        auth = (unquote(parsed.username), unquote(parsed.password) if parsed.password else '')
     except (AttributeError, TypeError):
         auth = ('', '')
 
